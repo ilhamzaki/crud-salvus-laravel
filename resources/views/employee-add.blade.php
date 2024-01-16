@@ -23,7 +23,7 @@
 
 <div class="my-5 d-flex justify-content-center">
     <div class="card p-5" style="width: 50rem;">
-        <form action="/employee" method="post">
+        <form action="/employee" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label fw-bold">Name</label>
@@ -58,6 +58,12 @@
                      @endforeach
                 </select>
             </div>
+            <div class="mb-5">
+                <label for="photo" class="form-label fw-bold">Image</label>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="photo" name="photo" >
+                  </div>
+                </div>
             <div class="mb-5">
                 <button class="btn btn-primary" type="submit">Save</button>
             </div>

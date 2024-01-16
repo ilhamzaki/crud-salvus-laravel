@@ -12,9 +12,14 @@ use App\Http\Requests\EmployeeUpdateRequest;
 
 class EmployeeController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
-        $employee = Employee::all();
+        $keyword = $request->keyword;
+        $employee = Employee::where('name', 'LIKE', '%'.$keyword.'%')
+                            ->orWhere('gender', $keyword)
+                            ->orWhere('email','LIKE', '%'.$keyword.'%')
+                            ->orWhere('phone','LIKE', '%'.$keyword.'%')
+                            ->paginate(10);
         return view("employee", ["employessList"=> $employee]);
     }
 
@@ -29,14 +34,27 @@ class EmployeeController extends Controller
     }
     public function store(EmployeeCreateRequest $request) {
 
-       $employee = Employee::create($request->all());
+        $requestName = $request->name;
+        $fileName = "";
+        
+        // photo diambil dari form id/name 
+        if($request->file('photo')) {
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            $fileName = str_replace(' ', '-', $requestName);
+            $fileName = $fileName.'-'.time().'.'.$extension;
+            $request->file('photo')->storeAs('images', $fileName);
+        }
 
-       if($employee) {
-          Session::flash("status","success");
-          Session::flash("message","Add new employee success!");
-       }
+        // membuat object baru bernama image (samakan dengan coloum database)
+        $request['image'] = $fileName;
+        $employee = Employee::create($request->all());
 
-       return redirect("/");
+        if($employee) {
+            Session::flash("status","success");
+            Session::flash("message","Add new employee success!");
+        }
+
+        return redirect("/");
     }
     public function edit($id) {
         $employee = Employee::with('job')->findOrFail($id);
@@ -47,6 +65,20 @@ class EmployeeController extends Controller
     public function update(EmployeeUpdateRequest $request, $id) {
         
         $employee = Employee::findOrFail($id);
+        $requestName = $request->name;
+        $fileName = "";
+        
+        // photo diambil dari form id/name 
+        if($request->file('photo')) {
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            $fileName = str_replace(' ', '-', $requestName);
+            $fileName = $fileName.'-'.time().'.'.$extension;
+            $request->file('photo')->storeAs('images', $fileName);
+            $request['image'] = $fileName;
+        } else {
+            $request['image'] = $employee->image;
+        }
+
         $employee->update($request->all());
 
         if($employee) {

@@ -15,7 +15,14 @@
   </div>
 @endif
 
-<div class="mt-5">
+<form action="" method="get">
+  <div class="input-group my-3">
+    <input type="text" class="form-control" placeholder="keyword" name="keyword">
+    <button class="btn btn-outline-primary">Search</button>
+  </div>
+</form>
+
+<div class="mt-3">
     <table class="table">
         <thead>
           <tr>
@@ -46,6 +53,8 @@
             </tbody>
         @endforeach
       </table>
+
+      {{$employessList->withQueryString()->links()}}
 </div>
 
     

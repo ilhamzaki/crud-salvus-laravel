@@ -16,7 +16,8 @@ class Employee extends Model
         'email',
         'phone',
         'address',
-        'job_id'
+        'job_id',
+        'image'
     ];
 
     public function job() {

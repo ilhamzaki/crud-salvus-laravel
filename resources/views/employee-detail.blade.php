@@ -9,8 +9,13 @@
     <h2>Detail Employee {{$employee->name}} ({{$employee->job->name}})</h2>
 </div>
 
-<div class="mt-5 d-flex justify-content-center">
-    <div style="width: 50rem;">
+<div class="my-5 d-flex flex-column justify-content-center">
+    @if($employee->image != '')
+        <img src="{{asset('storage/images/'.$employee->image)}}" class="rounded mx-auto mb-5" alt="photo" width="200px">
+    @else
+        <img src="{{asset('images/user-front-side-with-white-background.jpg')}}" class="rounded mx-auto mb-5" alt="photo" width="200px">
+    @endif
+    <div>
         <ul class="list-group">
             <li class="list-group-item"><span class="fw-bold">Name : </span>{{$employee->name}}</li>
             <li class="list-group-item"><span class="fw-bold">Gender : </span>{{$employee->gender}}</li>
