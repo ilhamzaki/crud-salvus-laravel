@@ -30,14 +30,6 @@ class EmployeeSeeder extends Seeder
                 'address' => "Jl. Nusa Indah Raya No 14 Rancaekek",
                 'job_id' => 1
             ],
-            [
-                'name' => 'Qorri Ilmi Faddillah', 
-                'gender' => 'P', 
-                'email' => "qorriilmi@gmail.com",
-                'phone' => "082275339668",
-                'address' => "Jl. Permata Hijau Bandung",
-                'job_id' => 2
-            ],
         ];
 
         foreach ($data as $value) {

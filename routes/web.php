@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
@@ -14,20 +15,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login', [AuthController::class,'login'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class,'auth']);
+Route::get('/logout', [AuthController::class,'logout'])->middleware('auth');
 
 Route::controller(EmployeeController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('/employee/{id}', 'show');
+    Route::get('/', 'index')->middleware('auth');
+    Route::get('/employee/{id}', 'show')->middleware('auth');
 
-    Route::get('/employee-add', 'create');
-    Route::post('/employee', 'store');
+    Route::get('/employee-add', 'create')->middleware('auth');
+    Route::post('/employee', 'store')->middleware('auth');
 
-    Route::get('/employee-edit/{id}', 'edit');
-    Route::put('/employee/{id}', 'update');
+    Route::get('/employee-edit/{id}', 'edit')->middleware('auth');
+    Route::put('/employee/{id}', 'update')->middleware('auth');
 
-    Route::put('/employee/{id}', 'update');
+    Route::put('/employee/{id}', 'update')->middleware('auth');
 
-    Route::delete('/employee-destroy/{id}', 'destroy');
+    Route::delete('/employee-destroy/{id}', 'destroy')->middleware('auth');
 });
 
-Route::get('/jobs', [JobController::class,'index']);
+Route::get('/jobs', [JobController::class,'index'])->middleware('auth');

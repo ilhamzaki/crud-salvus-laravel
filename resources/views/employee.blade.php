@@ -4,8 +4,7 @@
 
 @section('contain')
 
-
-<h1>Employee</h1>
+<h1>Employee - {{Auth::user()->name}}</h1>
 
 <div class="mt-5"><a href="/employee-add" class="btn btn-primary">Add Data</a></div>
 
