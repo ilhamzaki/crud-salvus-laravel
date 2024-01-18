@@ -4,9 +4,11 @@
 
 @section('contain')
 
-<h1>Employee - {{Auth::user()->name}}</h1>
+<h1>Employee</h1>
 
-<div class="mt-5"><a href="/employee-add" class="btn btn-primary">Add Data</a></div>
+@if (Auth::user()->role_id == 1)
+  <div class="mt-5"><a href="/employee-add" class="btn btn-primary">Add Data</a></div>
+@endif
 
 @if(Session::has('status'))
   <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
@@ -30,7 +32,9 @@
             <th scope="col">Gender</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
+            @if (Auth::user()->role_id == 1)
             <th scope="col">Action</th>
+            @endif
           </tr>
         </thead>
         @foreach ($employessList as $data)
@@ -40,6 +44,7 @@
               <td>{{$data->gender}}</td>
               <td>{{$data->email}}</td>
               <td>{{$data->phone}}</td>
+              @if (Auth::user()->role_id == 1)
               <td>
                 <a href="/employee/{{$data->id}}" class="btn btn-primary">Detail</a>
                 <a href="/employee-edit/{{$data->id}}" class="btn btn-warning">Edit</a>
@@ -49,6 +54,7 @@
                     <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                 </form>
               </td>
+              @endif
             </tbody>
         @endforeach
       </table>

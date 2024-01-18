@@ -18,11 +18,19 @@
             <li class="nav-item">
               <a class="nav-link" href="/">Employees</a>
             </li>
+            @if (Auth::user()->role_id == 1)
             <li class="nav-item">
               <a class="nav-link" href="/jobs">Jobs</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/roles">Roles</a>
+            </li>
+            @endif
           </ul>
-          <ul class="navbar-nav">
+          <ul class="navbar-nav"> 
+            <li class="nav-item me-4">
+              <span class="nav-link active">Role: {{Auth::user()->name}}</span>
+            </li>
             <li class="nav-item">
               <a class="btn btn-warning" href="/logout">Logout</a>
             </li>

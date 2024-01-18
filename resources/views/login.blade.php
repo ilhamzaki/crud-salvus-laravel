@@ -8,6 +8,7 @@
     <title>Login | Salvus</title>
 </head>
 <body>
+
     <div class="vh-100 d-flex justify-content-center align-items-center ">
         @if(Session::has('status'))
         <div class="alert alert-danger alert-dismissible fade show mt-5" role="alert">
@@ -17,11 +18,20 @@
         <div class="card" style="width: 24rem;">
             <div class="card-body">
                 <h4 class="card-title mb-5">Login</h4>
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="Email" class="form-label fw-bold">Email</label>
-                        <input type="text" class="form-control" id="email" name="email">
+                        <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
                     </div>
                     <div class="mb-3">
                         <label for="Password" class="form-label fw-bold">Password</label>

@@ -19,6 +19,10 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+        ],[
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email harus berupa alamat email yang valid.',
+            'password.required' => 'Password harus diisi.',
         ]);
  
         if (Auth::attempt($credentials)) {
@@ -26,9 +30,6 @@ class AuthController extends Controller
  
             return redirect()->intended('/');
         }
-        
-        Session::flash("status","success");
-        Session::flash("message","Add new employee success!");
 
         return redirect("/");
     }
